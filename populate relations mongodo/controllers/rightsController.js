@@ -20,12 +20,26 @@ module.exports = {
             const rightData = await Rights.find({ _id: req.body.rights_id })
                 .populate({
                     path: 'staff_id',
-                    match: { name: req.body.name },
+                    // match: { name: req.body.name },
                     // match: { name: { $regex: `.*${req.body.name}.*`, } }// match a char anywhere in name case sensitive
                     // match: { name: { $regex: `.*${req.body.name}.*`, Options: 'i' } } // now case insensitive
                     // match: { name: { $eq: req.body.name } },
                     // match: { name: { $ne: req.body.name } },
                     // match: { name: { $in: [req.body.name] } },
+               
+                    // select: 'name', // select only name
+                    select: '-_id', // select everything except _id
+                    // select: 'name email', // select name and email
+                    options: {
+                        // sort: { name: 1 } // asc order
+                        sort: { name: -1 }, // desc order
+                        limit: 2, // gives first 2 records
+                        offset: 2 // gives records starting from 2nd record
+                        
+                        
+                    }
+                        
+                   
                 });
             return res.status(200).json({
                 message: "Rights finded successfully",
