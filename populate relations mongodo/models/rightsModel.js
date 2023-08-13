@@ -4,10 +4,10 @@ const Schema = mongoose.Schema;
 
 const rightsSchema = new Schema({
   
-    staff_id: {
+    staff_id: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Staff',
-    },
+    }],
     rights: {
         type: String,
         required: true

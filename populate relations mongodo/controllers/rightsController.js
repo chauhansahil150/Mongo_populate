@@ -17,7 +17,16 @@ module.exports = {
         // inside try catch
         try {
             
-            const rightData = await Rights.find({ _id: req.body.rights_id }).populate('staff_id');
+            const rightData = await Rights.find({ _id: req.body.rights_id })
+                .populate({
+                    path: 'staff_id',
+                    match: { name: req.body.name },
+                    // match: { name: { $regex: `.*${req.body.name}.*`, } }// match a char anywhere in name case sensitive
+                    // match: { name: { $regex: `.*${req.body.name}.*`, Options: 'i' } } // now case insensitive
+                    // match: { name: { $eq: req.body.name } },
+                    // match: { name: { $ne: req.body.name } },
+                    // match: { name: { $in: [req.body.name] } },
+                });
             return res.status(200).json({
                 message: "Rights finded successfully",
                 data: rightData,
